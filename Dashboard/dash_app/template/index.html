@@ -1,3 +1,8 @@
 <h2>The Result is </h2>
  <img src="dash_app/static/dash_app/out.gif" alt='imagename'>
-{{a}}
+
+{% if a %}
+<p>Abnormal PET Scan</p>
+{%else%}
+<p>Normal PET Scan</p>
+{% endif%}

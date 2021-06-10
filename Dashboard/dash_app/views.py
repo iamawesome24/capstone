@@ -145,12 +145,10 @@ def predict(request):
     filePathName4 = fs.url(fileObj.name)
     paths.append("."+filePathName4)
 
-    #context={'filePathName':filePathName}
-    
-    print(paths) 
-    #process_pipeline(paths, fname='dash_app/static/dash_app/out.gif')
-    
+    process_pipeline(paths, fname='dash_app/static/dash_app/out.gif')
     return render(request, 'index.html', context)
+
+
 
 from pet import output
 
@@ -160,7 +158,10 @@ def run(request):
     fileObj = request.FILES['petfilelocation']
     filePathName5 = fs.save(fileObj.name, fileObj)
     filePathName5 = fs.url(fileObj.name)
-    print("PATH_____________________")
     print(filePathName5)
-    content = {'a':output(filePathName5)}
+    path = 'Dashboard' + filePathName5
+    content = {'a':output(path)}
     return render(request, 'index.html', content)
+
+
+
