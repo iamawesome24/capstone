@@ -1,3 +1,31 @@
+import os
+import glob
+import cv2 
+import numpy as np
+import nibabel as nib
+import matplotlib.pyplot as plt
+from tqdm import tqdm
+import gc
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.model_selection import train_test_split
+import tensorflow as tf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import tensorflow as tf
 import numpy as np
 import SimpleITK as sitk
@@ -20,19 +48,20 @@ out_channels = ['empty', 'ncr', 'ed', 'et']
 
 # model.save("model-best.h5", include_optimizer=False)
 
-model = tf.keras.models.load_model("dl//model-best.h5", custom_objects={'ConvNorm': ConvNorm,
-                                                                    'NormAct': NormAct,
-                                                                    'AttnBottleneckBlock': AttnBottleneckBlock,
-                                                                    'BasicBlock': BasicBlock,
-                                                                    'InvertedResBlock': InvertedResBlock,
-                                                                    'SqueezeExcite': SqueezeExcite,
-                                                                    'MHSA3D': MHSA3D,
-                                                                    'AbsPosEmb': AbsPosEmb,
-                                                                    'dsc': dsc,
-                                                                    'FocalTversky': FocalTversky,
-                                                                    'CustomCLR': CustomCLR,
-                                                                    }, compile=False)
+# model = tf.keras.models.load_model("dl//model-best.h5", custom_objects={'ConvNorm': ConvNorm,
+#                                                                     'NormAct': NormAct,
+#                                                                     'AttnBottleneckBlock': AttnBottleneckBlock,
+#                                                                     'BasicBlock': BasicBlock,
+#                                                                     'InvertedResBlock': InvertedResBlock,
+#                                                                     'SqueezeExcite': SqueezeExcite,
+#                                                                     'MHSA3D': MHSA3D,
+#                                                                     'AbsPosEmb': AbsPosEmb,
+#                                                                     'dsc': dsc,
+#                                                                     'FocalTversky': FocalTversky,
+#                                                                     'CustomCLR': CustomCLR,
+#                                                                     }, compile=False)
 
+model = tf.keras.models.load_model('C://Users//heman//Downloads//PET_alzh.h5')
 def sort_path_list(path_list):
     ret = []
     for cnl in channel_names:
@@ -91,5 +120,14 @@ def process_pipeline(paths, fname="out.gif"):
     mx = img.max()
     img = (img - mn)/(mx - mn) * 255
     make_gif(img, preds*255, fname=fname)
+
+
+
+
+
+
+
+
+
 
 

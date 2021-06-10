@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import FileSystemStorage
 import os
 from django.templatetags.static import static
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 # Create your views here.
 
@@ -123,10 +124,11 @@ def predict(request):
     paths = []
     
     fs = OverwriteStorage()
+ 
     fileObj = request.FILES['filelocation1']
     filePathName1 = fs.save(fileObj.name, fileObj)
     filePathName1 = fs.url(fileObj.name)
-    paths.append("."+filePathName1)
+    paths.append(".", filePathName1)
     
     fileObj = request.FILES['filelocation2']
     filePathName2 = fs.save(fileObj.name, fileObj)
@@ -146,8 +148,19 @@ def predict(request):
     #context={'filePathName':filePathName}
     
     print(paths) 
-    process_pipeline(paths, fname='ThreeDim/static/ThreeDim/out.gif')
-
+    #process_pipeline(paths, fname='dash_app/static/dash_app/out.gif')
+    
     return render(request, 'index.html', context)
 
+from pet import output
 
+def run(request):
+    
+    fs = OverwriteStorage()
+    fileObj = request.FILES['petfilelocation']
+    filePathName5 = fs.save(fileObj.name, fileObj)
+    filePathName5 = fs.url(fileObj.name)
+    print("PATH_____________________")
+    print(filePathName5)
+    content = {'a':output(filePathName5)}
+    return render(request, 'index.html', content)
